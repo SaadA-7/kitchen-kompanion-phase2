@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=640, initial-scale=1.0">
+  <title>Kitchen Kompanion</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="app-device">
+
+  <!-- MAIN CONTENT VIEWPORT -->
+  <div class="content-area">
+
+    <!-- TAB 1: Kitchen Screen -->
+    <div id="tab-kitchen" class="tab-content active">
+      <div class="kitchen-top-header">
+        <div class="header-title-group">
+          <h1 class="screen-title-left">My Kitchen</h1>
+          <span class="household-badge">Apt 4B (4 Members)</span>
+        </div>
+        <div class="header-btn-group">
+          <button type="button" id="reset-demo-btn" class="secondary-btn">Reset Demo Data</button>
+          <button type="button" id="open-add-modal-btn" class="primary-btn">+ Add food</button>
+        </div>
+      </div>
+
+      <div class="search-filter-bar">
+        <input type="text" id="kitchen-search" class="search-input" placeholder="Search kitchen (e.g., spinach, eggs, milk)...">
+        <div class="location-filters">
+          <button type="button" class="filter-btn active" data-location="All">All</button>
+          <button type="button" class="filter-btn" data-location="Fridge">Fridge</button>
+          <button type="button" class="filter-btn" data-location="Pantry">Pantry</button>
+          <button type="button" class="filter-btn" data-location="Freezer">Freezer</button>
+        </div>
+      </div>
+
+      <div class="inventory-controls-row">
+        <h2 id="inventory-count-title" class="section-heading">Food inventory (9 items)</h2>
+        <div class="controls-right">
+          <label class="expiring-pill">
+            <input type="checkbox" id="expiring-soon-toggle">
+            <span>Expiring Soon (&le; 3 days)</span>
+          </label>
+          <select id="sort-select" class="sort-select">
+            <option value="expiry">Sort: Expiration (Soonest)</option>
+            <option value="name">Sort: Name (A-Z)</option>
+            <option value="location">Sort: Location</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="inventory-grid" class="inventory-grid"></div>
+    </div>
+
+
+    <!-- TAB 2: Shopping Screen (Teammate) -->
+    <div id="tab-shopping" class="tab-content">
+      <!-- Code Goes Here -->
+    </div>
+
+
+    <!-- TAB 3: Recipes Screen (Teammate) -->
+    <div id="tab-recipes" class="tab-content">
+      <!-- Code Goes Here -->
+    </div>
+
+
+    <!-- TAB 4: Preferences Screen (Teammate) -->
+    <div id="tab-preferences" class="tab-content">
+      <!-- Code Goes Here -->
+    </div>
+
+  </div>
+
+
+  <!-- Add Food Modal -->
+  <div id="add-food-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Add Food to Kitchen</h3>
+        <button type="button" id="close-add-modal-btn" class="close-btn">&times;</button>
+      </div>
+      <form id="add-food-form">
+        <div class="form-group">
+          <label for="food-name-input">Item name</label>
+          <input type="text" id="food-name-input" placeholder="e.g., Whole milk" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="food-qty-input">Quantity</label>
+            <input type="number" id="food-qty-input" value="1" min="1" required>
+          </div>
+          <div class="form-group">
+            <label for="food-unit-input">Unit</label>
+            <select id="food-unit-input">
+              <option value="count">count</option>
+              <option value="cups">cups</option>
+              <option value="oz">oz</option>
+              <option value="lbs">lbs</option>
+              <option value="boxes">boxes</option>
+              <option value="bag">bag</option>
+              <option value="cans">cans</option>
+              <option value="eggs">eggs</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="food-location-input">Storage location</label>
+            <select id="food-location-input">
+              <option value="Fridge">Fridge</option>
+              <option value="Pantry">Pantry</option>
+              <option value="Freezer">Freezer</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="food-owner-input">Ownership</label>
+            <select id="food-owner-input">
+              <option value="Shared">Shared</option>
+              <option value="Alex's">Alex's</option>
+              <option value="Suhaas's">Suhaas's</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="food-expiry-input">Days until expiration</label>
+          <input type="number" id="food-expiry-input" value="7" min="1" required>
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="cancel-add-modal-btn" class="secondary-btn">Cancel</button>
+          <button type="submit" class="primary-btn">Add to Kitchen</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- FIXED BOTTOM NAV BAR -->
+  <div id="nav-bar">
+
+    <button class="nav-button active" onclick="switchTab('tab-kitchen', this)">
+      <img src="icons/fridge.png" class="nav-icon" alt="Kitchen Icon">
+      <span>Kitchen</span>
+    </button>
+
+    <button class="nav-button" onclick="switchTab('tab-shopping', this)">
+      <img src="icons/shopping-cart.png" class="nav-icon" alt="Shopping Icon">
+      <span>Shopping</span>
+    </button>
+
+    <button class="nav-button" onclick="switchTab('tab-recipes', this)">
+      <img src="icons/recipe.png" class="nav-icon" alt="Recipes Icon">
+      <span>Recipes</span>
+    </button>
+
+    <button class="nav-button" onclick="switchTab('tab-preferences', this)">
+      <img src="icons/settings.png" class="nav-icon" alt="Preferences Icon">
+      <span>Preferences</span>
+    </button>
+
+  </div>
+
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
