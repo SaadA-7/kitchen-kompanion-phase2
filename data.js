@@ -10,13 +10,25 @@ const INITIAL_INVENTORY = [
   { id: "9", name: "Black beans", location: "Pantry", owner: "Shared", quantity: 4, unit: "cans", daysUntilExpiration: 365 }
 ];
 
+function localDateString(date = new Date()) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+}
+
+function daysToExpiration(date) {
+  const [year, month, day] = date.split('-').map(Number);
+  const now = new Date();
+  return Math.round((Date.UTC(year, month - 1, day) - Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())) / 86400000);
+}
+
 function getInventoryData() {
   const saved = localStorage.getItem("kk_inventory");
   if (!saved) {
     localStorage.setItem("kk_inventory", JSON.stringify(INITIAL_INVENTORY));
     return [...INITIAL_INVENTORY];
   }
-  return JSON.parse(saved);
+  return JSON.parse(saved).map(item => item.expirationDate
+    ? { ...item, daysUntilExpiration: daysToExpiration(item.expirationDate) }
+    : item);
 }
 
 function saveInventoryData(items) {

@@ -19,7 +19,8 @@ function switchTab(tabId, btnElement) {
 }
 
 function formatExpirationText(days) {
-  if (days <= 0) return "Expired";
+  if (days < 0) return "Expired";
+  if (days === 0) return "Expires today";
   if (days === 1) return "Expires tomorrow";
   if (days < 30) return `Expires in ${days} days`;
   const months = Math.round(days / 30);
@@ -94,7 +95,7 @@ function updateQuantity(id, delta) {
   const idx = items.findIndex((i) => i.id === id);
   if (idx === -1) return;
 
-  items[idx].quantity += delta;
+  items[idx].quantity = Math.round((items[idx].quantity + delta) * 100) / 100;
   if (items[idx].quantity <= 0) {
     items.splice(idx, 1);
   }
@@ -120,6 +121,7 @@ function openFoodModal(itemId = null) {
 
   form.reset();
   document.getElementById("food-name-input").setCustomValidity("");
+  document.getElementById("food-expiry-input").min = item ? Math.min(0, item.daysUntilExpiration) : 0;
   editingFoodId = itemId;
   foodDialogReturnId = item ? `edit-food-${item.id}` : "open-add-modal-btn";
   document.getElementById("food-modal-title").textContent = item ? "Edit Food in Kitchen" : "Add Food to Kitchen";
@@ -128,7 +130,11 @@ function openFoodModal(itemId = null) {
   if (item) {
     document.getElementById("food-name-input").value = item.name;
     document.getElementById("food-qty-input").value = item.quantity;
-    document.getElementById("food-unit-input").value = item.unit;
+    const unitInput = document.getElementById("food-unit-input");
+    if (![...unitInput.options].some(option => option.value === item.unit)) {
+      unitInput.add(new Option(item.unit, item.unit));
+    }
+    unitInput.value = item.unit;
     document.getElementById("food-location-input").value = item.location;
     document.getElementById("food-owner-input").value = item.owner;
     document.getElementById("food-expiry-input").value = item.daysUntilExpiration;
@@ -231,6 +237,11 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
       items[index] = { ...items[index], ...food };
+      if (items[index].expirationDate) {
+        const date = new Date();
+        date.setDate(date.getDate() + food.daysUntilExpiration);
+        items[index].expirationDate = localDateString(date);
+      }
     } else {
       items.push({ id: "item-" + Date.now(), ...food });
     }

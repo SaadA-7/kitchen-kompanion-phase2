@@ -56,9 +56,48 @@
     </div>
 
 
-    <!-- TAB 2: Shopping Screen (Teammate) -->
+    <!-- TAB 2: Shopping Screen -->
     <div id="tab-shopping" class="tab-content">
-      <!-- Code Goes Here -->
+      <header class="shopping-header">
+        <h1>Shopping</h1>
+        <button type="button" id="shopping-saved-open" class="shopping-button">Saved lists</button>
+      </header>
+      <div class="shopping-toolbar">
+        <p id="shopping-count" aria-live="polite">2 of 7 purchased</p>
+        <button type="button" id="shopping-add" class="shopping-button shopping-primary">+ Add item</button>
+      </div>
+      <ul id="shopping-items" aria-label="Active shopping list"></ul>
+      <footer class="shopping-footer">
+        <p id="shopping-status" role="status">Unpurchased items stay on your list.</p>
+        <button type="button" id="shopping-undo" class="shopping-button" hidden>Undo removal</button>
+        <button type="button" id="shopping-finish" class="shopping-button shopping-primary">Finish shopping (2)</button>
+      </footer>
+      <section id="shopping-editor" hidden aria-labelledby="shopping-editor-title">
+        <header class="shopping-header">
+          <h1 id="shopping-editor-title">Add item</h1>
+          <button type="button" id="shopping-remove" class="shopping-button" hidden>Remove</button>
+        </header>
+        <form id="shopping-form">
+          <div class="shopping-fields">
+            <label for="shopping-name">Item name</label>
+            <input id="shopping-name" maxlength="80" required autocomplete="off">
+            <div class="shopping-form-row">
+              <div><label for="shopping-quantity">Quantity</label><input id="shopping-quantity" type="number" min="0.01" max="9999" step="0.01" inputmode="decimal" required></div>
+              <div><label for="shopping-unit">Unit</label><select id="shopping-unit"><option>count</option><option>lbs</option><option>oz</option><option>g</option><option>kg</option><option>cups</option><option>gallon</option><option>liters</option><option>loaf</option><option>bag</option><option>boxes</option><option>cans</option><option>pack</option><option>bottle</option></select></div>
+            </div>
+            <label for="shopping-note">Note (optional)</label>
+            <input id="shopping-note" maxlength="120" autocomplete="off" placeholder="e.g., Plain, unsweetened">
+          </div>
+          <p id="shopping-form-status" role="status"></p>
+          <div class="shopping-form-actions">
+            <button type="button" id="shopping-cancel" class="shopping-button">Cancel</button>
+            <button type="submit" class="shopping-button shopping-primary" id="shopping-save">Add item</button>
+          </div>
+        </form>
+        <div class="shopping-keyboard" aria-hidden="true" hidden>
+          On-screen keyboard
+        </div>
+      </section>
     </div>
 
 
@@ -91,7 +130,7 @@
         <div class="form-row">
           <div class="form-group">
             <label for="food-qty-input">Quantity</label>
-            <input type="number" id="food-qty-input" value="1" min="1" required>
+            <input type="number" id="food-qty-input" value="1" min="0.01" step="0.01" required>
           </div>
           <div class="form-group">
             <label for="food-unit-input">Unit</label>
@@ -122,6 +161,7 @@
               <option value="Shared">Shared</option>
               <option value="Alex's">Alex's</option>
               <option value="Suhaas's">Suhaas's</option>
+              <option value="You">You</option>
             </select>
           </div>
         </div>
@@ -167,6 +207,9 @@
 
 <script src="data.js"></script>
 <script src="app.js"></script>
+<script src="shopping.js"></script>
+<script src="purchase-review.js"></script>
+<script src="saved-lists.js"></script>
 
 </body>
 </html>

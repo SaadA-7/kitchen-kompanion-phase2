@@ -17,7 +17,7 @@ const { pathToFileURL } = require('node:url');
     await page.getByRole('button', { name: 'Reset Demo Data' }).click();
     const readItems = () => page.evaluate(() => JSON.parse(localStorage.getItem('kk_inventory')));
     const initial = await readItems();
-    const screenshots = path.resolve(__dirname, '../docs/checkpoint/screenshots');
+    const screenshots = path.join(require('node:os').tmpdir(), 'kk-inventory-check');
     fs.mkdirSync(screenshots, { recursive: true });
     await page.screenshot({ path: path.join(screenshots, 'inventory-before-edit.png') });
     await page.getByRole('button', { name: 'Edit Fresh spinach', exact: true }).click();
@@ -67,7 +67,7 @@ const { pathToFileURL } = require('node:url');
     assert.deepEqual(await readItems(), saved);
     assert.equal(await page.locator('#food-name-input').evaluate(el => el.validity.valid), false);
     await page.locator('#food-name-input').fill('Fresh spinach');
-    for (const [field, value] of [['#food-qty-input', '0'], ['#food-qty-input', '1.5'], ['#food-expiry-input', '-1']]) {
+    for (const [field, value] of [['#food-qty-input', '0'], ['#food-qty-input', '0.001'], ['#food-expiry-input', '-1']]) {
       await page.locator(field).fill(value);
       await page.getByRole('button', { name: 'Save changes', exact: true }).click();
       assert.deepEqual(await readItems(), saved);
