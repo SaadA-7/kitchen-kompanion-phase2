@@ -57,28 +57,33 @@ function renderKitchenInventory() {
     const isWarning = item.daysUntilExpiration <= 3;
 
     card.innerHTML = `
-      <div class="food-card-left">
-        <div class="food-name-row">
-          <p class="food-name"></p>
-          <button type="button" class="edit-food-btn">Edit</button>
-        </div>
-        <div class="badge-row">
-          <span class="location-badge"></span>
-          <button type="button" class="owner-badge ${isShared ? "shared" : "personal"}"></button>
-        </div>
-        <span class="expiry-text ${isWarning ? "warning" : ""}">${formatExpirationText(item.daysUntilExpiration)}</span>
+      <div class="food-name-row">
+        <p class="food-name"></p>
+        <button type="button" class="edit-food-btn">Edit</button>
       </div>
-      <div class="quantity-controls">
-        <button type="button" class="qty-btn minus">-</button>
-        <span class="qty-label"></span>
-        <button type="button" class="qty-btn plus">+</button>
+      <div class="badge-row">
+        <span class="location-badge"></span>
+        <button type="button" class="owner-badge ${isShared ? "shared" : "personal"}"></button>
+      </div>
+      <div class="food-card-footer">
+        <span class="expiry-text ${isWarning ? "warning" : ""}">${formatExpirationText(item.daysUntilExpiration)}</span>
+        <div class="quantity-controls">
+          <button type="button" class="qty-btn minus" aria-label="Decrease ${item.name} quantity">-</button>
+          <span class="qty-label">
+            <span class="qty-number"></span>
+            <span class="qty-unit"></span>
+          </span>
+          <button type="button" class="qty-btn plus" aria-label="Increase ${item.name} quantity">+</button>
+        </div>
       </div>
     `;
     // Food names and other stored values are text, never HTML markup.
     card.querySelector(".food-name").textContent = item.name;
     card.querySelector(".location-badge").textContent = item.location;
     card.querySelector(".owner-badge").textContent = item.owner;
-    card.querySelector(".qty-label").textContent = `${item.quantity} ${item.unit}`;
+    card.querySelector(".qty-number").textContent = item.quantity;
+    card.querySelector(".qty-unit").textContent = item.unit;
+
     const editButton = card.querySelector(".edit-food-btn");
     editButton.id = `edit-food-${item.id}`;
     editButton.setAttribute("aria-label", `Edit ${item.name}`);
