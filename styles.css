@@ -897,3 +897,293 @@ select:focus-visible {
   margin-bottom: 3px;
   object-fit: contain;
 }
+/* Recipes Screen */
+
+#tab-recipes {
+  height: 100%;
+}
+
+#recipes-browser {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#recipe-detail {
+  height: 100%;
+  overflow-y: auto;
+}
+
+#tab-recipes [hidden] {
+  display: none;
+}
+
+/* Header */
+
+.recipes-header {
+  background: white;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.recipes-header p {
+  font-size: 16px;
+  color: #4B5563;
+  margin: 6px 0 0;
+}
+
+/* Search and Filters */
+
+.recipes-search-panel {
+  background: white;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.recipes-search-panel input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.recipe-filters {
+  display: flex;
+  gap: 6px;
+}
+
+.recipe-filter {
+  padding: 8px 12px;
+  font-size: 15px;
+  font-weight: bold;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  background: white;
+  color: #1F2937;
+  cursor: pointer;
+}
+
+.recipe-filter.active {
+  background: #166534;
+  color: white;
+  border-color: #166534;
+}
+
+/* Recipe Summary */
+
+.recipes-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#recipe-count {
+  font-size: 15px;
+  color: #4B5563;
+}
+
+#recipe-status {
+  font-size: 15px;
+  color: #166534;
+  margin: 0;
+}
+
+/* Add Recipe Button */
+
+.recipes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+#recipe-add-btn {
+  white-space: nowrap;
+}
+
+/* Recipe Form */
+
+#recipe-form-section {
+  background: white;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  padding: 16px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+#recipe-form-section h2 {
+  margin-top: 0;
+  font-size: 24px;
+}
+
+#recipe-form input,
+#recipe-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+#recipe-form textarea {
+  resize: vertical;
+}
+
+#recipe-form p {
+  font-size: 14px;
+  color: #6B7280;
+  margin-top: 5px;
+}
+
+.recipe-form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.recipe-detail-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+#recipe-delete-btn {
+  background: #B91C1C;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+
+/* Recipe Grid */
+
+.recipe-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  padding-bottom: 10px;
+}
+
+/* Recipe Cards */
+
+.recipe-card {
+  background: white;
+  border: 1px solid #D1D5DB;
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.recipe-card h3 {
+  font-size: 21px;
+  margin: 0;
+}
+
+.recipe-card p {
+  font-size: 15px;
+  color: #4B5563;
+  margin: 0;
+}
+
+.recipe-description {
+  flex: 1;
+}
+
+.recipe-card .primary-btn {
+  width: 100%;
+  font-size: 16px;
+}
+
+/* Ingredient Matching */
+
+.recipe-match {
+  font-size: 15px;
+  font-weight: bold;
+  color: #166534;
+}
+
+.recipe-match.missing {
+  color: #92400E;
+}
+
+.recipe-progress {
+  height: 7px;
+  background: #E5E7EB;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.recipe-progress-fill {
+  height: 100%;
+  background: #166534;
+}
+
+/* Recipe Details */
+
+#recipe-back {
+  margin-bottom: 10px;
+}
+
+.recipe-detail-card {
+  background: white;
+  border: 1px solid #D1D5DB;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.recipe-detail-card h2 {
+  font-size: 26px;
+  margin: 0 0 8px;
+}
+
+.recipe-detail-card h3 {
+  font-size: 21px;
+  margin: 18px 0 10px;
+}
+
+.recipe-detail-card p {
+  font-size: 16px;
+}
+
+.recipe-ingredient-list,
+.recipe-instructions {
+  font-size: 17px;
+  line-height: 1.5;
+  padding-left: 22px;
+}
+
+.recipe-ingredient-list li,
+.recipe-instructions li {
+  margin-bottom: 10px;
+}
+
+.available {
+  color: #166534;
+}
+
+.unavailable {
+  color: #92400E;
+}
+
+/* Empty State */
+
+.recipe-empty {
+  grid-column: span 2;
+  background: white;
+  border: 1px solid #D1D5DB;
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 17px;
+}
