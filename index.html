@@ -101,10 +101,181 @@
     </div>
 
 
-    <!-- TAB 3: Recipes Screen (Teammate) -->
-    <div id="tab-recipes" class="tab-content">
-      <!-- Code Goes Here -->
+
+<!-- TAB 3: Recipes Screen -->
+<div id="tab-recipes" class="tab-content">
+
+  <!-- Recipe Browser -->
+  <div id="recipes-browser">
+
+    <header class="recipes-header">
+      <div>
+        <h1 class="screen-title-left">Discover Recipes</h1>
+        <p>Find meals using ingredients in your kitchen.</p>
+      </div>
+
+      <button type="button" id="recipe-add-btn" class="primary-btn">
+        + Add Recipe
+      </button>
+    </header>
+
+    <!-- Search and Filters -->
+    <div class="recipes-search-panel">
+
+      <input
+        type="search"
+        id="recipe-search"
+        class="search-input"
+        placeholder="Search recipes or ingredients..."
+      >
+
+      <div class="recipe-filters">
+        <button type="button" class="recipe-filter active" data-filter="all">
+          All Recipes
+        </button>
+
+        <button type="button" class="recipe-filter" data-filter="ready">
+          Can Make
+        </button>
+
+        <button type="button" class="recipe-filter" data-filter="expiring">
+          Use Expiring
+        </button>
+      </div>
+
     </div>
+
+    <!-- Recipe List -->
+    <div class="recipes-summary">
+      <h2 class="section-heading">Recommended for You</h2>
+      <span id="recipe-count"></span>
+    </div>
+
+    <p id="recipe-status"></p>
+
+    <div id="recipe-grid" class="recipe-grid"></div>
+
+  </div>
+
+
+  <!-- Recipe Details -->
+  <section id="recipe-detail" hidden>
+
+    <button type="button" id="recipe-back" class="secondary-btn">
+      ← Back to Recipes
+    </button>
+
+    <div id="recipe-detail-content"></div>
+
+  </section>
+
+
+  <!-- Add/Edit Recipe Form -->
+  <section id="recipe-form-section" hidden>
+
+    <h2 id="recipe-form-title">Add Recipe</h2>
+
+    <form id="recipe-form">
+
+      <!-- Recipe Name -->
+      <div class="form-group">
+        <label for="new-recipe-name">Recipe Name</label>
+        <input
+          type="text"
+          id="new-recipe-name"
+          placeholder="e.g., Chicken Alfredo"
+          required
+        >
+      </div>
+
+      <!-- Cooking Time and Servings -->
+      <div class="form-row">
+
+        <div class="form-group">
+          <label for="new-recipe-time">Cooking Time (minutes)</label>
+          <input
+            type="number"
+            id="new-recipe-time"
+            min="1"
+            placeholder="30"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="new-recipe-servings">Servings</label>
+          <input
+            type="number"
+            id="new-recipe-servings"
+            min="1"
+            placeholder="2"
+            required
+          >
+        </div>
+
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label for="new-recipe-description">Description</label>
+        <input
+          type="text"
+          id="new-recipe-description"
+          placeholder="A creamy pasta dish with chicken."
+          required
+        >
+      </div>
+
+      <!-- Ingredients -->
+      <div class="form-group">
+        <label for="new-recipe-ingredients">Ingredients</label>
+
+        <textarea
+          id="new-recipe-ingredients"
+          rows="5"
+          placeholder="Chicken&#10;Pasta&#10;Heavy Cream&#10;Parmesan Cheese"
+          required
+        ></textarea>
+
+        <p>Enter one ingredient per line.</p>
+      </div>
+
+      <!-- Instructions -->
+      <div class="form-group">
+        <label for="new-recipe-instructions">Cooking Instructions</label>
+
+        <textarea
+          id="new-recipe-instructions"
+          rows="5"
+          placeholder="Boil pasta&#10;Cook chicken in a pan&#10;Add cream and cheese&#10;Mix together and serve"
+          required
+        ></textarea>
+
+        <p>Enter one step per line.</p>
+      </div>
+
+      <!-- Form Buttons -->
+      <div class="recipe-form-buttons">
+
+        <button
+          type="button"
+          id="recipe-cancel-btn"
+          class="secondary-btn"
+        >
+          Cancel
+        </button>
+
+        <button type="submit" class="primary-btn">
+          Save Recipe
+        </button>
+
+      </div>
+
+    </form>
+
+  </section>
+
+</div>
 
 
     <!-- TAB 4: Preferences Screen (Teammate) -->
@@ -210,6 +381,7 @@
 <script src="shopping.js"></script>
 <script src="purchase-review.js"></script>
 <script src="saved-lists.js"></script>
+<script src="recipes.js"></script>
 
 </body>
 </html>
