@@ -1187,3 +1187,6 @@ select:focus-visible {
   padding: 20px;
   font-size: 17px;
 }
+
+.unfinished-panel { background: white; padding: 24px; border: 1px solid #D1D5DB; border-radius: 10px; }
+.unfinished-panel p { font-size: 20px; line-height: 1.5; }

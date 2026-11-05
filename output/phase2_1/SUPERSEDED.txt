@@ -1,0 +1,5 @@
+This package and its PDFs describe an earlier integration build.
+The user subsequently requested reverting changes outside Preferences.
+These generated files are historical and do not describe the current source.
+Do not use this earlier ZIP as the current preferences-only build.
+Current write-up: docs/preferences-vertical-prototyping.md.

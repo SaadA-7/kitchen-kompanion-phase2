@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=640, initial-scale=1.0">
+  <title>Kitchen Kompanion</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="app-device">
+
+  <!-- MAIN CONTENT VIEWPORT -->
+  <div class="content-area">
+
+    <!-- TAB 1: Kitchen Screen -->
+    <div id="tab-kitchen" class="tab-content active">
+      <div class="kitchen-top-header">
+        <div class="header-title-group">
+          <h1 class="screen-title-left">My Kitchen</h1>
+          <span class="household-badge">Apt 4B (4 Members)</span>
+        </div>
+        <div class="header-btn-group">
+          <button type="button" id="reset-demo-btn" class="secondary-btn">Reset Demo Data</button>
+          <button type="button" id="open-add-modal-btn" class="primary-btn">+ Add food</button>
+        </div>
+      </div>
+
+      <div class="search-filter-bar">
+        <input type="text" id="kitchen-search" class="search-input" placeholder="Search kitchen (e.g., spinach, eggs, milk)...">
+        <div class="location-filters">
+          <button type="button" class="filter-btn active" data-location="All">All</button>
+          <button type="button" class="filter-btn" data-location="Fridge">Fridge</button>
+          <button type="button" class="filter-btn" data-location="Pantry">Pantry</button>
+          <button type="button" class="filter-btn" data-location="Freezer">Freezer</button>
+        </div>
+      </div>
+
+      <div class="inventory-controls-row">
+        <h2 id="inventory-count-title" class="section-heading">Food inventory (9 items)</h2>
+        <div class="controls-right">
+          <label class="expiring-pill">
+            <input type="checkbox" id="expiring-soon-toggle">
+            <span>Expiring Soon (&le; 3 days)</span>
+          </label>
+          <select id="sort-select" class="sort-select">
+            <option value="expiry">Sort: Expiration (Soonest)</option>
+            <option value="name">Sort: Name (A-Z)</option>
+            <option value="location">Sort: Location</option>
+          </select>
+        </div>
+      </div>
+
+      <p id="inventory-status" class="inventory-status" role="status" aria-live="polite"></p>
+      <div id="inventory-grid" class="inventory-grid"></div>
+    </div>
+
+
+    <!-- TAB 2: Shopping Screen -->
+    <div id="tab-shopping" class="tab-content">
+      <header class="shopping-header">
+        <h1>Shopping</h1>
+        <button type="button" id="shopping-saved-open" class="shopping-button">Saved lists</button>
+      </header>
+      <div class="shopping-toolbar">
+        <p id="shopping-count" aria-live="polite">2 of 7 purchased</p>
+        <button type="button" id="shopping-add" class="shopping-button shopping-primary">+ Add item</button>
+      </div>
+      <ul id="shopping-items" aria-label="Active shopping list"></ul>
+      <footer class="shopping-footer">
+        <p id="shopping-status" role="status">Unpurchased items stay on your list.</p>
+        <button type="button" id="shopping-undo" class="shopping-button" hidden>Undo removal</button>
+        <button type="button" id="shopping-finish" class="shopping-button shopping-primary">Finish shopping (2)</button>
+      </footer>
+      <section id="shopping-editor" hidden aria-labelledby="shopping-editor-title">
+        <header class="shopping-header">
+          <h1 id="shopping-editor-title">Add item</h1>
+          <button type="button" id="shopping-remove" class="shopping-button" hidden>Remove</button>
+        </header>
+        <form id="shopping-form">
+          <div class="shopping-fields">
+            <label for="shopping-name">Item name</label>
+            <input id="shopping-name" maxlength="80" required autocomplete="off">
+            <div class="shopping-form-row">
+              <div><label for="shopping-quantity">Quantity</label><input id="shopping-quantity" type="number" min="0.01" max="9999" step="0.01" inputmode="decimal" required></div>
+              <div><label for="shopping-unit">Unit</label><select id="shopping-unit"><option>count</option><option>lbs</option><option>oz</option><option>g</option><option>kg</option><option>cups</option><option>gallon</option><option>liters</option><option>loaf</option><option>bag</option><option>boxes</option><option>cans</option><option>pack</option><option>bottle</option></select></div>
+            </div>
+            <label for="shopping-note">Note (optional)</label>
+            <input id="shopping-note" maxlength="120" autocomplete="off" placeholder="e.g., Plain, unsweetened">
+          </div>
+          <p id="shopping-form-status" role="status"></p>
+          <div class="shopping-form-actions">
+            <button type="button" id="shopping-cancel" class="shopping-button">Cancel</button>
+            <button type="submit" class="shopping-button shopping-primary" id="shopping-save">Add item</button>
+          </div>
+        </form>
+        <div class="shopping-keyboard" aria-hidden="true" hidden>
+          On-screen keyboard
+        </div>
+      </section>
+    </div>
+
+
+
+<!-- TAB 3: Recipes Screen -->
+<div id="tab-recipes" class="tab-content">
+
+  <!-- Recipe Browser -->
+  <div id="recipes-browser">
+
+    <header class="recipes-header">
+      <div>
+        <h1 class="screen-title-left">Discover Recipes</h1>
+        <p>Find meals using ingredients in your kitchen.</p>
+      </div>
+
+      <button type="button" id="recipe-add-btn" class="primary-btn">
+        + Add Recipe
+      </button>
+    </header>
+
+    <!-- Search and Filters -->
+    <div class="recipes-search-panel">
+
+      <input
+        type="search"
+        id="recipe-search"
+        class="search-input"
+        placeholder="Search recipes or ingredients..."
+      >
+
+      <div class="recipe-filters">
+        <button type="button" class="recipe-filter active" data-filter="all">
+          All Recipes
+        </button>
+
+        <button type="button" class="recipe-filter" data-filter="ready">
+          Can Make
+        </button>
+
+        <button type="button" class="recipe-filter" data-filter="expiring">
+          Use Expiring
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Recipe List -->
+    <div class="recipes-summary">
+      <h2 class="section-heading">Recommended for You</h2>
+      <span id="recipe-count"></span>
+    </div>
+
+    <p id="recipe-status"></p>
+
+    <div id="recipe-grid" class="recipe-grid"></div>
+
+  </div>
+
+
+  <!-- Recipe Details -->
+  <section id="recipe-detail" hidden>
+
+    <button type="button" id="recipe-back" class="secondary-btn">
+      ← Back to Recipes
+    </button>
+
+    <div id="recipe-detail-content"></div>
+
+  </section>
+
+
+  <!-- Add/Edit Recipe Form -->
+  <section id="recipe-form-section" hidden>
+
+    <h2 id="recipe-form-title">Add Recipe</h2>
+
+    <form id="recipe-form">
+
+      <!-- Recipe Name -->
+      <div class="form-group">
+        <label for="new-recipe-name">Recipe Name</label>
+        <input
+          type="text"
+          id="new-recipe-name"
+          placeholder="e.g., Chicken Alfredo"
+          required
+        >
+      </div>
+
+      <!-- Cooking Time and Servings -->
+      <div class="form-row">
+
+        <div class="form-group">
+          <label for="new-recipe-time">Cooking Time (minutes)</label>
+          <input
+            type="number"
+            id="new-recipe-time"
+            min="1"
+            placeholder="30"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="new-recipe-servings">Servings</label>
+          <input
+            type="number"
+            id="new-recipe-servings"
+            min="1"
+            placeholder="2"
+            required
+          >
+        </div>
+
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label for="new-recipe-description">Description</label>
+        <input
+          type="text"
+          id="new-recipe-description"
+          placeholder="A creamy pasta dish with chicken."
+          required
+        >
+      </div>
+
+      <!-- Ingredients -->
+      <div class="form-group">
+        <label for="new-recipe-ingredients">Ingredients</label>
+
+        <textarea
+          id="new-recipe-ingredients"
+          rows="5"
+          placeholder="Chicken&#10;Pasta&#10;Heavy Cream&#10;Parmesan Cheese"
+          required
+        ></textarea>
+
+        <p>Enter one ingredient per line.</p>
+      </div>
+
+      <!-- Instructions -->
+      <div class="form-group">
+        <label for="new-recipe-instructions">Cooking Instructions</label>
+
+        <textarea
+          id="new-recipe-instructions"
+          rows="5"
+          placeholder="Boil pasta&#10;Cook chicken in a pan&#10;Add cream and cheese&#10;Mix together and serve"
+          required
+        ></textarea>
+
+        <p>Enter one step per line.</p>
+      </div>
+
+      <!-- Form Buttons -->
+      <div class="recipe-form-buttons">
+
+        <button
+          type="button"
+          id="recipe-cancel-btn"
+          class="secondary-btn"
+        >
+          Cancel
+        </button>
+
+        <button type="submit" class="primary-btn">
+          Save Recipe
+        </button>
+
+      </div>
+
+    </form>
+
+  </section>
+
+</div>
+
+
+    <!-- TAB 4: Preferences Screen (Teammate) -->
+    <div id="tab-preferences" class="tab-content">
+      <section class="unfinished-panel">
+        <h1>Preferences</h1>
+        <p>Preferences are not implemented in this prototype.</p>
+        <p>Use Kitchen, Shopping, or Recipes to manage food and plan meals.</p>
+        <button type="button" id="preferences-back" class="primary-btn" onclick="switchTab('tab-kitchen', document.querySelectorAll('.nav-button')[0])">Back to Kitchen</button>
+      </section>
+    </div>
+
+  </div>
+
+
+  <!-- Shared add/edit food dialog -->
+  <div id="add-food-modal" class="modal-overlay">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="food-modal-title">
+      <div class="modal-header">
+        <h3 id="food-modal-title">Add Food to Kitchen</h3>
+        <button type="button" id="close-add-modal-btn" class="close-btn" aria-label="Close food dialog">&times;</button>
+      </div>
+      <form id="add-food-form">
+        <div class="form-group">
+          <label for="food-name-input">Item name</label>
+          <input type="text" id="food-name-input" placeholder="e.g., Whole milk" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="food-qty-input">Quantity</label>
+            <input type="number" id="food-qty-input" value="1" min="0.01" step="0.01" required>
+          </div>
+          <div class="form-group">
+            <label for="food-unit-input">Unit</label>
+            <select id="food-unit-input">
+              <option value="count">count</option>
+              <option value="cups">cups</option>
+              <option value="oz">oz</option>
+              <option value="lbs">lbs</option>
+              <option value="boxes">boxes</option>
+              <option value="bag">bag</option>
+              <option value="cans">cans</option>
+              <option value="eggs">eggs</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="food-location-input">Storage location</label>
+            <select id="food-location-input">
+              <option value="Fridge">Fridge</option>
+              <option value="Pantry">Pantry</option>
+              <option value="Freezer">Freezer</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="food-owner-input">Ownership</label>
+            <select id="food-owner-input">
+              <option value="Shared">Shared</option>
+              <option value="Alex's">Alex's</option>
+              <option value="Suhaas's">Suhaas's</option>
+              <option value="You">You</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="food-expiry-input">Days until expiration</label>
+          <input type="number" id="food-expiry-input" value="7" min="0" required>
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="cancel-add-modal-btn" class="secondary-btn">Cancel</button>
+          <button type="submit" id="save-food-btn" class="primary-btn">Add to Kitchen</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- FIXED BOTTOM NAV BAR -->
+  <div id="nav-bar">
+
+    <button class="nav-button active" onclick="switchTab('tab-kitchen', this)">
+      <img src="icons/fridge.png" class="nav-icon" alt="Kitchen Icon">
+      <span>Kitchen</span>
+    </button>
+
+    <button class="nav-button" onclick="switchTab('tab-shopping', this)">
+      <img src="icons/shopping-cart.png" class="nav-icon" alt="Shopping Icon">
+      <span>Shopping</span>
+    </button>
+
+    <button class="nav-button" onclick="switchTab('tab-recipes', this)">
+      <img src="icons/recipe.png" class="nav-icon" alt="Recipes Icon">
+      <span>Recipes</span>
+    </button>
+
+    <button class="nav-button" onclick="switchTab('tab-preferences', this)">
+      <img src="icons/settings.png" class="nav-icon" alt="Preferences Icon">
+      <span>Preferences</span>
+    </button>
+
+  </div>
+
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script src="shopping.js"></script>
+<script src="purchase-review.js"></script>
+<script src="saved-lists.js"></script>
+<script src="recipes.js"></script>
+
+</body>
+</html>
